@@ -1,14 +1,21 @@
-```markdown
 # 📊 ClickReady Chart Service
 
-[![Pipeline Status](https://img.shields.io/gitlab/pipeline-status/clickready/chart-service?branch=main)](https://gitlab.com/clickready/chart-service/pipelines)
-[![Coverage](https://img.shields.io/gitlab/coverage/clickready/chart-service/main)](https://gitlab.com/clickready/chart-service/-/graphs/main/chart)
 [![Java Version](https://img.shields.io/badge/Java-21-blue.svg)](https://adoptium.net/)
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.2.4-brightgreen.svg)](https://spring.io/projects/spring-boot)
 [![React](https://img.shields.io/badge/React-18-blue.svg)](https://reactjs.org/)
+[![Pipeline Status](https://img.shields.io/gitlab/pipeline-status/clickready/chart-service?branch=main)](https://gitlab.com/clickready/chart-service/pipelines)
+[![Coverage](https://img.shields.io/gitlab/coverage/clickready/chart-service/main)](https://gitlab.com/clickready/chart-service/-/graphs/main/chart)
 [![License](https://img.shields.io/badge/License-Proprietary-red.svg)](LICENSE)
 
-> **Полноценное решение для визуализации медийных метрик** — микросервис с React-фронтендом для интерактивного отображения 4 временных рядов (Area, Spline, Line, Bar) с синхронизированными эффектами наведения.
+---
+
+> - **Интерактивный сервис для визуализации данных медийной аналитики.**
+> - **Полноценное микросервисное решение с React-фронтендом для интерактивного отображения.**
+> - **Отображает 4 временных ряда (Area, Spline, Line, Bar) с синхронизированными эффектами наведения, кастомными точками и анимациями.**
+>
+> 
+> - **Frontend:** React + Recharts  
+> - **Backend:** Java 21 + Spring Boot
 
 ---
 
@@ -844,4 +851,3 @@ Copyright © 2026 **ClickReady**. Все права защищены.
 
 > **Разработано с ❤️ командой ClickReady**  
 > *Инновации в медийном маркетинге с 2008 года*
-```
