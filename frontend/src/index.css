@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background: #f3f4f6;
+}
+
+/* Курсор-рука для элементов графика */
+.recharts-dot,
+.recharts-active-dot,
+.recharts-area,
+.recharts-line {
+    cursor: pointer !important;
+}
+
+/* Убираем выделение только у элементов интерфейса, но не у текста внутри тултипа */
+* {
+    user-select: none;
+}
+
+/* Разрешаем выделение текста в тултипе, чтобы можно было скопировать цифры */
+.recharts-tooltip-wrapper * {
+    user-select: text !important;
+}

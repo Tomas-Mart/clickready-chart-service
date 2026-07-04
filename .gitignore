@@ -1,0 +1,259 @@
+# Создаем .gitignore
+cat > .gitignore << 'EOF'
+# ============================================
+# Java / Maven (Backend)
+# ============================================
+
+# Compiled class files
+*.class
+*.jar
+*.war
+*.ear
+
+# Maven
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+
+# Gradle
+.gradle/
+build/
+gradle-app.setting
+!gradle-wrapper.jar
+
+# ============================================
+# Spring Boot
+# ============================================
+
+spring.log
+spring-boot-devtools.properties
+application-dev.properties
+application-prod.properties
+application-test.properties
+*.pid
+
+# ============================================
+# Node.js / React (Frontend)
+# ============================================
+
+# Dependencies
+frontend/node_modules/
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+frontend/package-lock.json
+frontend/yarn.lock
+
+# Build outputs
+frontend/build/
+frontend/dist/
+frontend/.cache/
+
+# Environment variables
+frontend/.env
+frontend/.env.local
+frontend/.env.development.local
+frontend/.env.test.local
+frontend/.env.production.local
+
+# ============================================
+# IDE / Editors
+# ============================================
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+.idea_modules/
+
+# Eclipse
+.settings/
+.project
+.classpath
+.springBeans
+.sts4-cache
+.apt_generated
+.factorypath
+.metadata/
+
+# VS Code
+.vscode/
+*.code-workspace
+.code/
+.vscode-test/
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# NetBeans
+/nbproject/
+/nbdist/
+/.nb-gradle/
+
+# ============================================
+# Operating System
+# ============================================
+
+# macOS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+.directory
+
+# ============================================
+# Docker
+# ============================================
+
+docker/*.pid
+docker/*.log
+docker/data/
+docker/.env
+
+# ============================================
+# Kubernetes / Helm
+# ============================================
+
+helm/**/charts/
+helm/**/Chart.lock
+helm/**/values.local.yaml
+
+# ============================================
+# Logs
+# ============================================
+
+logs/
+log/
+*.log
+*.log.gz
+*.log.zip
+*.tmp
+*.bak
+temp/
+
+# ============================================
+# Build tools
+# ============================================
+
+.mvn/wrapper/maven-wrapper.jar
+.mvn/wrapper/maven-wrapper.properties
+mvnw
+mvnw.cmd
+*.timestamp
+*.flattened-pom.xml
+
+# ============================================
+# Testing
+# ============================================
+
+*.test
+*.fail
+.ut.xml
+.junit
+coverage/
+.jacoco/
+test-output/
+*.report
+
+# ============================================
+# Documentation
+# ============================================
+
+*.md.backup
+*.md.tmp
+docs/_build/
+docs/api/
+
+# ============================================
+# Environment / Secrets
+# ============================================
+
+.env
+.env.local
+.env.*.local
+*.secret
+secrets.yml
+application-secrets.yml
+config/application-secrets.yml
+
+# ============================================
+# Database
+# ============================================
+
+*.db
+*.sqlite
+*.h2.db
+*.mv.db
+*.trace.db
+*.lck
+*.script
+*.log.db
+
+# ============================================
+# Cache
+# ============================================
+
+.cache/
+.cache-loader/
+.parcel-cache/
+.eslintcache
+*.tsbuildinfo
+
+# ============================================
+# Misc
+# ============================================
+
+*~
+*.swp
+*.swo
+*.backup
+*.old
+*.orig
+*.rej
+
+*.zip
+*.tar.gz
+*.rar
+*.7z
+
+*.dmp
+*.dump
+*.heap
+*.hprof
+*.jfr
+
+*.local
+*.local.properties
+local.properties
+
+# ============================================
+# Project specific
+# ============================================
+
+backend/HELP.md
+backend/target/
+backend/.mvn/wrapper/maven-wrapper.jar
+backend/.mvn/wrapper/maven-wrapper.properties
+backend/mvnw
+backend/mvnw.cmd
+backend/*.log
+backend/logs/
+EOF
