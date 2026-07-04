@@ -68,11 +68,11 @@ services:
       - chart-network
 
   # Остальные сервисы...
-  app:
+  backend:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    container_name: chart-app
+    container_name: chart-backend
     depends_on:
       postgres:
         condition: service_healthy
@@ -95,6 +95,19 @@ services:
       - "8080:8080"
     volumes:
       - ./logs:/app/logs
+    networks:
+      - chart-network
+
+  # Добавьте после backend:
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    container_name: chart-frontend
+    depends_on:
+      - backend
+    ports:
+      - "8081:80"
     networks:
       - chart-network
 
