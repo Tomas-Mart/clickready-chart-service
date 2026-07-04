@@ -1,6 +1,6 @@
-import React from "react";
-import { COLORS } from '../config/colors';
-import { MetricRow } from './MetricRow';
+import React from 'react';
+import {COLORS} from './config/colors';
+import {MetricRow} from './MetricRow';
 
 export const CustomTooltip = ({active, payload}) => {
     if (active && payload && payload.length) {

@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 export const MetricRow = ({color, label, value}) => (
     <div style={{display: 'flex', alignItems: 'center', fontSize: 13, color: '#374151'}}>

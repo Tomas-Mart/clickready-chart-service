@@ -1,18 +1,21 @@
-import { useContext } from 'react';
-import { ActiveDateContext } from '../DashboardChart';
-import { COLORS } from '../config/colors';
-import { GREEN_LINE_POINTS, PURPLE_LINE_POINTS } from '../config/coordinates';
+import {useContext} from 'react';
+import {COLORS} from './config/colors';
+import {ChartStateContext} from './context/ChartStateContext';
+import {GREEN_LINE_POINTS, PURPLE_LINE_POINTS} from './config/coordinates';
 
 // ==================== HALO-ЭФФЕКТЫ С ОТЛАДКОЙ ====================
 
+// Хало-эффект для желтой линии (Cost) - с использованием ActiveDateContext
 export const YellowHaloDot = (props) => {
     const {cx, cy, payload} = props;
-    const activeDate = useContext(ActiveDateContext);
+
+    // ✅ Деструктурируем activeDate из контекста
+    const {activeDate} = useContext(ChartStateContext);
 
     const isActive = payload?.rawDate === activeDate;
     console.log(`🟡 YellowHaloDot: ${payload?.rawDate}, activeDate=${activeDate}, isActive=${isActive}`);
 
-    if (cx == null || cy == null || !payload || payload.isMidPoint) return null;
+    if (cx === null || cy === null || cx === undefined || cy === undefined || !payload || payload.isMidPoint) return null;
     if (payload.rawDate !== activeDate) return null;
 
     console.log(`✅🟡 YellowHaloDot ОТОБРАЖЕН для ${payload.rawDate}`);
@@ -29,14 +32,17 @@ export const YellowHaloDot = (props) => {
     );
 };
 
+// Хало-эффект для зеленой линии (ROI) - с использованием точных координат из GREEN_LINE_POINTS
 export const GreenHaloDot = (props) => {
     const {cx, cy, payload} = props;
-    const activeDate = useContext(ActiveDateContext);
+
+    // ✅ Деструктурируем activeDate из контекста
+    const {activeDate} = useContext(ChartStateContext);
 
     const isActive = payload?.rawDate === activeDate;
     console.log(`🟢 GreenHaloDot: ${payload?.rawDate}, activeDate=${activeDate}, isActive=${isActive}`);
 
-    if (cx == null || cy == null || !payload || payload.isMidPoint) return null;
+    if (cx === null || cy === null || cx === undefined || cy === undefined || !payload || payload.isMidPoint) return null;
     if (payload.rawDate !== activeDate) return null;
 
     const exactPoint = GREEN_LINE_POINTS[payload.rawDate];
@@ -60,12 +66,14 @@ export const GreenHaloDot = (props) => {
 // Хало-эффект для фиолетовой линии (Conversions) - с поддержкой activeDate из пропсов
 export const PurpleHaloDot = (props) => {
     const {cx, cy, payload, activeDate: propActiveDate} = props;
-    const contextActiveDate = useContext(ActiveDateContext);
+
+    // ✅ Деструктурируем activeDate из контекста
+    const {activeDate: contextActiveDate} = useContext(ChartStateContext);
 
     // Используем activeDate из пропсов, если передано, иначе из контекста
     const currentActiveDate = propActiveDate !== undefined ? propActiveDate : contextActiveDate;
 
-    if (cx == null || cy == null || !payload || payload.isMidPoint) return null;
+    if (cx === null || cy === null || cx === undefined || cy === undefined || !payload || payload.isMidPoint) return null;
     if (payload.rawDate !== currentActiveDate) return null;
 
     const exactPoint = PURPLE_LINE_POINTS[payload.rawDate];

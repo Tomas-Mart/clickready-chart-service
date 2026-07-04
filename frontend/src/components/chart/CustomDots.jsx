@@ -1,13 +1,14 @@
-import React from "react";
-import {COLORS} from '../config/colors';
-import {GREEN_LINE_POINTS, POINT_OFFSETS, PURPLE_LINE_POINTS} from '../config/coordinates';
-import {useChartState} from '../hooks/useChartState';
+import React, {useContext} from 'react';
+import {COLORS} from './config/colors';
+import {ChartStateContext} from './context/ChartStateContext';
+import {GREEN_LINE_POINTS, POINT_OFFSETS, PURPLE_LINE_POINTS} from './config/coordinates';
 
 // ==================== КАСТОМНЫЕ ТОЧКИ ====================
 
 // Зеленый ромб
 export const GreenDiamondDot = ({cx, cy, payload}) => {
-    if (cx == null || cy == null || !payload || payload.isMidPoint) return null;
+
+    if (cx === null || cy === null || cx === undefined || cy === undefined || !payload || payload.isMidPoint) return null;
 
     const exactPoint = GREEN_LINE_POINTS[payload.rawDate];
     const exactCx = exactPoint ? exactPoint.cx : cx;
@@ -33,8 +34,6 @@ export const GreenDiamondDot = ({cx, cy, payload}) => {
 // Квадратик для фиолетовой линии (Conversions) с отладкой
 export const PurpleSquareDot = ({cx, cy, payload, active}) => {
 
-    if (cx == null || cy == null || !payload || payload.isMidPoint) return null;
-
     const {
         selectedDate,
         setSelectedDate,
@@ -42,7 +41,9 @@ export const PurpleSquareDot = ({cx, cy, payload, active}) => {
         setHoveredPurple,
         setActiveDate,
         activeDate
-    } = useChartState();
+    } = useContext(ChartStateContext);
+
+    if (cx === null || cy === null || cx === undefined || cy === undefined || !payload || payload.isMidPoint) return null;
 
     const exactPoint = PURPLE_LINE_POINTS[payload.rawDate];
     const exactCx = exactPoint ? exactPoint.cx : cx;
@@ -72,7 +73,7 @@ export const PurpleSquareDot = ({cx, cy, payload, active}) => {
             }}
             onMouseLeave={() => {
                 console.log(`🟣🟣🟣 УХОД С КВАДРАТИКА ${payload.rawDate} 🟣🟣🟣`);
-                console.log(`   - Сбрасываем hoveredPurple и activeDate`);
+                console.log('   - Сбрасываем hoveredPurple и activeDate');
                 setHoveredPurple(null);
                 setActiveDate(null);
             }}
@@ -91,7 +92,7 @@ export const PurpleSquareDot = ({cx, cy, payload, active}) => {
                 strokeWidth={strokeWidth}
                 style={{
                     transition: 'all 0.15s ease-in-out',
-                    transformOrigin: `${exactCx}px ${exactCy}px`,
+                    transformOrigin: exactCx + 'px ' + exactCy + 'px',
                 }}
             />
         </g>
@@ -100,7 +101,8 @@ export const PurpleSquareDot = ({cx, cy, payload, active}) => {
 
 // Желтый круг
 export const YellowCircleDot = ({cx, cy, payload}) => {
-    if (cx == null || cy == null || !payload || payload.isMidPoint) return null;
+
+    if (cx === null || cy === null || cx === undefined || cy === undefined || !payload || payload.isMidPoint) return null;
 
     const rawDate = payload.rawDate;
     const offset = POINT_OFFSETS.yellow[rawDate] || {cx: 0, cy: 0};

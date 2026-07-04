@@ -1,6 +1,9 @@
 // ==================== ОСНОВНЫЕ КОМПОНЕНТЫ ====================
 export {default as DashboardChart} from './DashboardChart';
 
+// ==================== КОНТЕКСТ ====================
+export {ChartStateContext} from './context/ChartStateContext';
+
 // ==================== КОНФИГУРАЦИЯ ====================
 export {COLORS} from './config/colors';
 export {SCALES} from './config/scales';

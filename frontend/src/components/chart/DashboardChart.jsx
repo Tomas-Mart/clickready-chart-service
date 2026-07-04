@@ -1,4 +1,5 @@
-import React, {createContext, useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
+import {ChartStateContext} from './context/ChartStateContext';
 import {Area, Bar, ComposedChart, Line, ReferenceLine, ResponsiveContainer, Tooltip, XAxis, YAxis} from 'recharts';
 
 import {COLORS} from './config/colors';
@@ -9,8 +10,6 @@ import {CustomTooltip} from './CustomTooltip';
 import {GreenHaloDot, PurpleHaloDot, YellowHaloDot} from './HaloDots';
 import {GreenDiamondDot, PurpleSquareDot, YellowCircleDot} from './CustomDots';
 
-export const ActiveDateContext = createContext(null);
-
 // ==================== ОСНОВНОЙ КОМПОНЕНТ ====================
 
 const DashboardChart = () => {
@@ -19,6 +18,24 @@ const DashboardChart = () => {
     const [selectedDate, setSelectedDate] = useState(null);
     const [hoveredPurple, setHoveredPurple] = useState(null);
     const chartRef = useRef(null);
+
+    console.log('🔍 ChartStateContext в DashboardChart:', ChartStateContext);
+    console.log('🔍 activeDate в DashboardChart:', activeDate);
+
+    // ✅ Создаем объект со всеми состояниями для контекста
+    const chartState = {
+        activeDate,
+        setActiveDate,
+        selectedDate,
+        setSelectedDate,
+        hoveredPurple,
+        setHoveredPurple,
+    };
+
+    // Дополнительный лог для отслеживания изменений activeDate
+    useEffect(() => {
+        console.log('🔄 activeDate ИЗМЕНИЛСЯ в DashboardChart:', activeDate);
+    }, [activeDate]);
 
     const mainData = BASE_POINTS.map((point, index) => ({
         date: point.date,
@@ -119,8 +136,14 @@ const DashboardChart = () => {
         });
     }, [activeDate, selectedDate, hoveredPurple, mainData]);
 
+    // Функция-обертка для отладки
+    const handleSetActiveDate = (date) => {
+        console.log('📌 Устанавливаем activeDate в DashboardChart:', date);
+        setActiveDate(date);
+    };
+
     return (
-        <ActiveDateContext.Provider value={activeDate}>
+        <ChartStateContext.Provider value={chartState}>
             <div
                 ref={chartRef}
                 className="w-full max-w-4xl mx-auto h-[420px] bg-[#FDE8E8] p-4 rounded-lg border border-gray-300 flex relative"
@@ -218,11 +241,11 @@ const DashboardChart = () => {
                                 }}
                                 onMouseEnter={(e) => {
                                     if (e && e.payload && e.payload.rawDate && !e.payload.isMidPoint) {
-                                        setActiveDate(e.payload.rawDate);
+                                        handleSetActiveDate(e.payload.rawDate);
                                     }
                                 }}
                                 onMouseLeave={() => {
-                                    setActiveDate(null);
+                                    handleSetActiveDate(null);
                                 }}
                             />
 
@@ -247,11 +270,11 @@ const DashboardChart = () => {
                                 }}
                                 onMouseEnter={(e) => {
                                     if (e && e.payload && e.payload.rawDate && !e.payload.isMidPoint) {
-                                        setActiveDate(e.payload.rawDate);
+                                        handleSetActiveDate(e.payload.rawDate);
                                     }
                                 }}
                                 onMouseLeave={() => {
-                                    setActiveDate(null);
+                                    handleSetActiveDate(null);
                                 }}
                             />
 
@@ -281,13 +304,13 @@ const DashboardChart = () => {
                                 onMouseEnter={(e) => {
                                     if (e && e.payload && e.payload.rawDate) {
                                         console.log(`🟣 Purple line onMouseEnter: ${e.payload.rawDate}`);
-                                        setActiveDate(e.payload.rawDate);
+                                        handleSetActiveDate(e.payload.rawDate);
                                         setHoveredPurple(e.payload.rawDate);
                                     }
                                 }}
                                 onMouseLeave={() => {
                                     console.log('🟣 Purple line onMouseLeave');
-                                    setActiveDate(null);
+                                    handleSetActiveDate(null);
                                     setHoveredPurple(null);
                                 }}
                             />
@@ -297,7 +320,7 @@ const DashboardChart = () => {
                     </ResponsiveContainer>
                 </div>
             </div>
-        </ActiveDateContext.Provider>
+        </ChartStateContext.Provider>
     );
 };
 
