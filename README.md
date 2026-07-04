@@ -74,8 +74,8 @@
 
 **ClickReady Chart Service** — это полноценное решение для визуализации данных медийных кампаний, состоящее из:
 
-- **Backend** — высокопроизводительный микросервис на Java + Spring Boot
 - **Frontend** — интерактивный дашборд на React + Recharts
+- **Backend** — высокопроизводительный микросервис на Java + Spring Boot
 
 Сервис принимает 4 временных ряда данных (Area, Spline, Line, Bar) и отображает их в современном интерфейсе с возможностью фильтрации по датам и интерактивным тултипом.
 
@@ -100,23 +100,23 @@
 
 #### Backend
 
+- ✅ **Безопасность**: JWT аутентификация
+- ✅ **Асинхронная обработка** через Kafka
 - ✅ **4 типа визуализации**: Area, Spline, Line, Bar
 - ✅ **Кэширование через Redis** для мгновенных ответов
-- ✅ **Асинхронная обработка** через Kafka
+- ✅ **Масштабируемость**: Горизонтальное масштабирование
 - ✅ **Полная наблюдаемость**: Prometheus + Grafana + ELK
 - ✅ **Отказоустойчивость**: Resilience4j (Circuit Breaker, Retry)
-- ✅ **Безопасность**: JWT аутентификация
-- ✅ **Масштабируемость**: Горизонтальное масштабирование
 
 #### Frontend
 
-- ✅ **Интерактивный график** с 4 типами линий
-- ✅ **Кастомный тултип** с метриками (Cost, CPA, ROI, Conversions)
-- ✅ **Синхронизированные эффекты наведения** — бледные круги появляются одновременно на всех линиях
-- ✅ **Кастомные точки** — квадраты, ромбы, круги с анимацией
-- ✅ **Ручная настройка координат** через SCALES, BASE_COORDS, POINT_OFFSETS
 - ✅ **Адаптивный дизайн**
 - ✅ **Анимация при загрузке**
+- ✅ **Интерактивный график** с 4 типами линий
+- ✅ **Кастомные точки** — квадраты, ромбы, круги с анимацией
+- ✅ **Кастомный тултип** с метриками (Cost, CPA, ROI, Conversions)
+- ✅ **Ручная настройка координат** через SCALES, BASE_COORDS, POINT_OFFSETS
+- ✅ **Синхронизированные эффекты наведения** — бледные круги появляются одновременно на всех линиях
 
 ---
 
@@ -224,11 +224,11 @@
 
 ### Предварительные требования
 
-- **Java 21** (LTS) — [скачать](https://adoptium.net/)
-- **Node.js 20** — [скачать](https://nodejs.org/)
-- **Docker** и **Docker Compose** — [скачать](https://www.docker.com/)
-- **Maven** 3.9+ — [скачать](https://maven.apache.org/)
 - **Git** — [скачать](https://git-scm.com/)
+- **Node.js 20** — [скачать](https://nodejs.org/)
+- **Maven** 3.9+ — [скачать](https://maven.apache.org/)
+- **Java 21** (LTS) — [скачать](https://adoptium.net/)
+- **Docker** и **Docker Compose** — [скачать](https://www.docker.com/)
 
 ### Локальный запуск
 
@@ -296,15 +296,17 @@ docker-compose down
 <details>
 <summary><b>📥 GET /api/v1/chart/data</b></summary>
 
-```http
+**Запрос:**
+
+```text
 GET /api/v1/chart/data
 Authorization: Bearer <JWT_TOKEN>
 Accept: application/json
 ```
 
-**Ответ:**
+**Успешный ответ (200 OK):**
+
 ```json
-HTTP/1.1 200 OK
 [
     {
         "date": "2026-06-13",
@@ -316,16 +318,28 @@ HTTP/1.1 200 OK
     }
 ]
 ```
+
+**Возможные ошибки:**
+
+| Код | Описание                               |
+|-----|----------------------------------------|
+| 401 | Невалидный или отсутствующий JWT токен |
+| 500 | Внутренняя ошибка сервера              |
+
 </details>
 
 <details>
 <summary><b>📤 POST /api/v1/chart/data</b></summary>
 
-```http
+**Запрос:**
+
+```text
 POST /api/v1/chart/data
 Authorization: Bearer <JWT_TOKEN>
 Content-Type: application/json
+```
 
+```json
 {
     "date": "2026-06-13",
     "cost": 55.65,
@@ -335,9 +349,9 @@ Content-Type: application/json
 }
 ```
 
-**Ответ:**
+**Успешный ответ (201 Created):**
+
 ```json
-HTTP/1.1 201 Created
 {
     "date": "2026-06-13",
     "cost": 55.65,
@@ -347,7 +361,18 @@ HTTP/1.1 201 Created
     "profitable": true
 }
 ```
+
+**Возможные ошибки:**
+
+| Код | Описание                                                         |
+|-----|------------------------------------------------------------------|
+| 400 | Невалидные данные (неверный формат даты, отрицательные значения) |
+| 401 | Невалидный или отсутствующий JWT токен                           |
+| 409 | Запись с такой датой уже существует                              |
+
 </details>
+
+---
 
 ### Аутентификация
 
@@ -368,17 +393,18 @@ curl -H "Authorization: Bearer $TOKEN" http://localhost:8080/api/v1/chart/data
 
 ### Компоненты
 
-| Компонент | Описание |
-|-----------|----------|
-| **DashboardChart** | Основной компонент графика |
-| **CustomTooltip** | Кастомный тултип с метриками |
-| **ChartLegend** | Легенда с toggle для линий |
-| **DateRangePicker** | Выбор диапазона дат |
-| **LoadingSpinner** | Индикатор загрузки |
+| Компонент | Описание                      |
+|-----------|-------------------------------|
+| **DashboardChart** | Основной компонент графика    |
+| **CustomTooltip** | Кастомный тултип с метриками  |
+| **ChartLegend** | Легенда с toggle для линий    |
+| **DateRangePicker** | Выбор диапазона дат           |
+| **LoadingSpinner** | Индикатор загрузки            |
 
 ### Структура фронтенда
 
-```
+```text
+
 frontend/src/
 ├── api/
 │   ├── chartApi.js              # API для работы с графиком
@@ -386,15 +412,26 @@ frontend/src/
 ├── components/
 │   ├── chart/
 │   │   ├── DashboardChart.jsx   # Основной компонент графика
-│   │   ├── chartConfig.js       # Конфигурация (цвета, типы)
-│   │   ├── ChartLegend.tsx      # Легенда графика
-│   │   └── ChartTooltip.tsx     # Кастомный тултип
+│   │   ├── index.js             # Экспорты всех компонентов
+│   │   ├── CustomTooltip.jsx    # Кастомный тултип с метриками
+│   │   ├── CustomDots.jsx       # Кастомные точки (квадраты, ромбы, круги)
+│   │   ├── HaloDots.jsx         # Halo-эффекты (бледные круги при наведении)
+│   │   ├── MetricRow.jsx        # Строка метрики для тултипа
+│   │   ├── config/
+│   │   │   ├── colors.js        # Цветовая палитра
+│   │   │   ├── scales.js        # Масштабы для линий
+│   │   │   ├── coordinates.js   # Базовые координаты и оффсеты
+│   │   │   └── data.js          # Данные и генерация промежуточных точек
+│   │   ├── hooks/
+│   │   │   └── useChartState.js # Хук для управления состояниями (activeDate, selectedDate, hoveredPurple)
+│   │   └── utils/
+│   │       └── chartHelpers.js  # Вспомогательные функции (applyOffset)
 │   └── common/
 │       ├── Button/              # Переиспользуемые кнопки
-│       └── Card/                # Переиспользуемые карточки
+│       ├── Card/                # Переиспользуемые карточки
+│       └── index.js             # Экспорты общих компонентов
 ├── hooks/
-│   ├── useChartData.ts          # Хук для данных графика
-│   └── useResizeObserver.js     # Хук для адаптивности
+│   └── useChartData.ts          # Хук для получения данных с API
 ├── pages/
 │   └── Dashboard/
 │       ├── Dashboard.jsx        # Страница дашборда
@@ -407,6 +444,7 @@ frontend/src/
 │   ├── slices/
 │   │   ├── chartSlice.js        # Redux слайс для графика
 │   │   └── uiSlice.js           # UI состояние
+│   ├── index.js                 # Экспорты
 │   └── store.js                 # Конфигурация store
 ├── styles/
 │   ├── globals.css              # Глобальные стили
@@ -414,12 +452,16 @@ frontend/src/
 │   └── variables.css            # CSS переменные
 ├── types/
 │   ├── api.types.ts             # Типы для API
-│   └── chart.types.ts           # Типы для графика
+│   ├── chart.types.ts           # Типы для графика
+│   └── index.ts                 # Экспорты
 ├── utils/
 │   ├── dateHelpers.js           # Работа с датами
-│   └── numberHelpers.js         # Работа с числами
-├── App.tsx                      # Главный компонент
-└── index.tsx                    # Точка входа
+│   ├── numberHelpers.js         # Работа с числами
+│   └── validationHelpers.js     # Валидация
+├── App.jsx                      # Главный компонент
+├── index.css                    # Главные стили
+└── index.jsx                    # Точка входа
+
 ```
 
 ### Ключевые компоненты
